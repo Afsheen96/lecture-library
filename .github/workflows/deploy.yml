@@ -36,8 +36,8 @@ jobs:
         run: |
           mkdir _site
           cp -r index.html style.css script.js lectures.json sitemap.xml assets .nojekyll _site/
-          [ -f robots.txt ] && cp robots.txt _site/ || true
-          for f in google*.html; do [ -f "$f" ] && cp "$f" _site/; done
+          if [ -f robots.txt ]; then cp robots.txt _site/; fi
+          for f in google*.html; do if [ -f "$f" ]; then cp "$f" _site/; fi; done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
