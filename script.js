@@ -105,5 +105,33 @@
     });
   });
 
+  // Privacy: let visitors turn analytics off (or back on) on this device
+  var toggle = document.getElementById("analytics-toggle");
+  var status = document.getElementById("analytics-status");
+  if (toggle && typeof window.gtag === "function") {
+    var off = false;
+    try { off = localStorage.getItem("analytics-off") === "1"; } catch (e) {}
+    var showState = function () {
+      toggle.textContent = off ? "Turn analytics back on" : "Turn off analytics on this device";
+      status.textContent = off ? "Analytics is off on this device." : "";
+    };
+    toggle.hidden = false;
+    showState();
+    toggle.addEventListener("click", function () {
+      off = !off;
+      try { localStorage.setItem("analytics-off", off ? "1" : "0"); } catch (e) {}
+      window.gtag("consent", "update", { analytics_storage: off ? "denied" : "granted" });
+      if (off) {
+        // Remove any analytics cookies already set
+        document.cookie.split(";").forEach(function (c) {
+          var name = c.split("=")[0].trim();
+          if (/^_ga/.test(name)) document.cookie = name + "=; Max-Age=0; path=/; domain=" + location.hostname.replace(/^www\./, "");
+        });
+      }
+      showState();
+      if (!off) status.textContent = "Analytics will turn back on when you reload the page.";
+    });
+  }
+
   render();
 })();

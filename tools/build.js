@@ -104,14 +104,32 @@ const schema = {
   ]
 };
 
+// EU/EEA countries, UK and Switzerland, where analytics cookies need consent
+const CONSENT_REGIONS = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","IS","LI","NO","GB","CH"];
+
 const headExtra = [
   gsc ? `  <meta name="google-site-verification" content="${esc(gsc)}">` : "",
-  ga4 ? `  <script async src="https://www.googletagmanager.com/gtag/js?id=${ga4}"></script>
-  <script>
+  ga4 ? `  <script>
+    // Privacy-friendly GA4: no ads features, no Google signals, no banner.
+    // EU/EEA, UK and Switzerland: analytics cookies stay off (consent mode "denied").
+    // Anyone can turn analytics off on their device from the Privacy section.
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "${ga4}", { allow_google_signals: false, allow_ad_personalization_signals: false });
+    var analyticsOff = false;
+    try { analyticsOff = localStorage.getItem("analytics-off") === "1"; } catch (e) {}
+    window["ga-disable-${ga4}"] = analyticsOff;
+    var noAds = { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+    gtag("consent", "default", Object.assign({ analytics_storage: "denied", region: ${JSON.stringify(CONSENT_REGIONS)} }, noAds));
+    gtag("consent", "default", Object.assign({ analytics_storage: analyticsOff ? "denied" : "granted" }, noAds));
+    gtag("set", "ads_data_redaction", true);
+    if (!analyticsOff) {
+      gtag("js", new Date());
+      gtag("config", "${ga4}", { allow_google_signals: false, allow_ad_personalization_signals: false });
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=${ga4}";
+      document.head.appendChild(s);
+    }
   </script>` : "",
   `  <script type="application/ld+json">\n${JSON.stringify(schema, null, 2).replace(/</g, "\\u003c")}\n  </script>`
 ].filter(Boolean).join("\n");

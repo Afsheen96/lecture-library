@@ -181,12 +181,21 @@ body {
 .faq-item h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; color: var(--ink); }
 .faq-item p { font-size: .95rem; }
 
+.privacy-control { margin-top: 12px !important; font-size: .9rem; }
+.text-button {
+  font: inherit; font-weight: 600; color: #0667B8; background: none; border: 0; padding: 0;
+  text-decoration: underline; cursor: pointer;
+}
+#analytics-status { color: var(--muted); }
+
 /* FOOTER */
 .site-footer { background: var(--navy); color: rgba(255,255,255,.82); }
 .footer-inner { text-align: center; padding-block: 32px; font-size: .9rem; }
 .footer-inner p { margin: 4px 0; }
 .credit { margin-top: 12px !important; color: var(--sky); }
 .credit strong { color: var(--gold); font-weight: 700; }
+.footer-links { margin-top: 10px !important; }
+.footer-links a { color: var(--sky); }
 
 /* MOBILE */
 @media (max-width: 560px) {
