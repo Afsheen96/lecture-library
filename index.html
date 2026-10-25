@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Freelancing AI — Lecture Library</title>
+  <meta name="description" content="An independent student resource to quickly search and open Learn Freelancing AI lecture links.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- SECTION 1: HEADER -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="Learn Freelancing AI home">
+        <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" fill="currentColor"/>
+          <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5Z" fill="currentColor" opacity=".55"/>
+          <path d="M9 7h7M9 10h5" stroke="#061B32" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span>Learn Freelancing AI</span>
+      </a>
+      <span class="header-label">Lecture Library</span>
+    </div>
+  </header>
+
+  <!-- SECTION 2: ORIGINAL COVER PHOTO (shown exactly as uploaded) -->
+  <section class="cover" aria-label="Course cover">
+    <img id="cover-img" class="cover-img" src="assets/cover.jpg" alt="Learn Freelancing AI course cover featuring Sir Hisham Sarwar">
+    <div id="cover-missing" class="cover-missing" hidden>
+      Cover photo not found. Save your original cover image as <code>assets/cover.jpg</code>.
+    </div>
+  </section>
+
+  <!-- SECTION 3 + 4: SEARCH AREA AND CATEGORY FILTERS -->
+  <section class="search-area">
+    <div class="wrap search-inner">
+      <h1 class="search-title"><span class="white">Find Your Next</span> <span class="gold">Lecture.</span></h1>
+      <p class="search-subtitle">All your learning links, organized in one place.</p>
+
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/>
+          <path d="m20 20-3.8-3.8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        <label for="search" class="sr-only">Search lectures</label>
+        <input id="search" type="search" placeholder="Search lecture by name or number..." autocomplete="off">
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="Filter by category">
+        <button type="button" class="chip active" data-category="All Lectures" aria-pressed="true">All Lectures</button>
+        <button type="button" class="chip" data-category="AI & Automation" aria-pressed="false">AI &amp; Automation</button>
+        <button type="button" class="chip" data-category="Freelancing" aria-pressed="false">Freelancing</button>
+        <button type="button" class="chip" data-category="Web & App Development" aria-pressed="false">Web &amp; App Development</button>
+        <button type="button" class="chip" data-category="Digital Marketing" aria-pressed="false">Digital Marketing</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 + 6: LECTURE LIST -->
+  <main class="lectures">
+    <div class="wrap">
+      <div class="list-head">
+        <h2>Browse Lectures</h2>
+        <span id="count" class="count" aria-live="polite"></span>
+      </div>
+      <p class="fb-note">Some lectures may require Facebook login or group membership.</p>
+      <ul id="lecture-list" class="lecture-list"></ul>
+      <p id="empty" class="empty" hidden></p>
+    </div>
+  </main>
+
+  <!-- SECTION 8: FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Created as an independent student learning resource.</p>
+      <p>All lecture content belongs to its respective original creators.</p>
+      <p class="credit">With respect and gratitude to <strong>Sir Hisham Sarwar</strong> for his teaching. This is not an official website and is not endorsed by him.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
