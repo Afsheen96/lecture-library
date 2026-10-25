@@ -23,7 +23,7 @@ The `CLAUDE.md` file in this folder tells Claude Code the rules automatically, s
 - add the lectures in the right format,
 - refuse duplicate lecture numbers or duplicate Facebook links,
 - leave your existing lectures untouched,
-- run the checker (`node tools/check-lectures.js`),
+- rebuild the page (`node tools/build.js`) so the new lectures are in the HTML that Google reads,
 - commit and push so the live site updates.
 
 **Categories** (write one of these exactly):
@@ -50,7 +50,8 @@ Rules:
 - `number` has no quotes. Everything else has "double quotes".
 - The order in the file doesn't matter. The website always sorts lectures by number.
 
-Then click **Commit changes**.
+Then click **Commit changes**. GitHub rebuilds and republishes the page for you automatically (see the **Actions** tab).
+If you made a mistake, such as a duplicate number, the build shows a red ❌ and your live site stays as it was.
 
 ---
 
@@ -71,7 +72,8 @@ You can watch the deploy in your repository under the **Actions** tab. A green t
 
 ## Safety nets built in
 
-- **Duplicates:** the checker blocks duplicate numbers and links. If one slips through, the website shows only the first one.
+- **Duplicates:** the build refuses duplicate numbers and links, so a mistake never reaches the live site.
 - **Order:** lectures always display in number order, even if added out of order.
 - **Search and filters:** every new lecture works with the search bar and category buttons automatically.
+- **Google can read every lecture:** the build writes each lecture into the page's HTML, plus the structured data and sitemap date.
 - **No public "Add Lecture" button:** a button on the website could not save lectures permanently or safely, so updates go through GitHub only. Nobody else can change your list.

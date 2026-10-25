@@ -1,0 +1,46 @@
+# Builds the lecture list from lectures.json and publishes the site to GitHub Pages
+# every time something is pushed to main. If lectures.json has a mistake
+# (duplicate number or link, wrong category), the build stops and the live site stays as it was.
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check lectures and build page
+        run: node tools/build.js
+      - name: Collect site files
+        run: |
+          mkdir _site
+          cp -r index.html style.css script.js lectures.json sitemap.xml assets .nojekyll _site/
+          [ -f robots.txt ] && cp robots.txt _site/ || true
+          for f in google*.html; do [ -f "$f" ] && cp "$f" _site/; done
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
